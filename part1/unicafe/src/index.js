@@ -40,6 +40,19 @@ const App = () => {
 
   let total = good + neutral + bad
 
+  if (total == 0) {
+    return (
+      <div>
+        <Header phrase='give feedback' />
+        <Button handleClick={handleClickGood} word='good' />
+        <Button handleClick={handleClickNeutral} word='neutral' />
+        <Button handleClick={handleClickBad} word='bad' />
+        <Header phrase='statistics' />
+        <p>No feedback given</p>
+      </div>
+    )
+  }
+
   return (
     <div>
       <Header phrase='give feedback' />
