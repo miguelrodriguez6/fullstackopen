@@ -7,10 +7,25 @@ const Header = ({ phrase }) => {
   )
 }
 
-const Statistics = ({ type, num }) => {
+const StatisticsLine = ({ type, num }) => {
   return (
     <p>{type} {num}</p>
   )
+}
+
+const Statistics = ({ good, neutral, bad }) => {
+  let total = good + neutral + bad
+  return (
+    <>
+      <StatisticsLine type='good' num={good} />
+      <StatisticsLine type='neutral' num={neutral} />
+      <StatisticsLine type='bad' num={bad} />
+      <StatisticsLine type='all' num={total} />
+      <StatisticsLine type='average' num={(good - bad) / (total)} />
+      <StatisticsLine type='positive' num={good / total} />
+    </>
+  )
+
 }
 
 const Button = ({ handleClick, word }) => {
@@ -38,9 +53,7 @@ const App = () => {
     setBad(bad + 1)
   }
 
-  let total = good + neutral + bad
-
-  if (total == 0) {
+  if (good + neutral + bad == 0) {
     return (
       <div>
         <Header phrase='give feedback' />
@@ -60,12 +73,8 @@ const App = () => {
       <Button handleClick={handleClickNeutral} word='neutral' />
       <Button handleClick={handleClickBad} word='bad' />
       <Header phrase='statistics' />
-      <Statistics type='good' num={good} />
-      <Statistics type='neutral' num={neutral} />
-      <Statistics type='bad' num={bad} />
-      <Statistics type='all' num={total} />
-      <Statistics type='average' num={(good - bad) / (total)} />
-      <Statistics type='positive' num={good / total} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
+
     </div>
   )
 }
