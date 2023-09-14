@@ -7,7 +7,7 @@ const Header = ({ phrase }) => {
   )
 }
 
-const Word = ({ type, num }) => {
+const Statistics = ({ type, num }) => {
   return (
     <p>{type} {num}</p>
   )
@@ -40,6 +40,8 @@ const App = () => {
     setBad(bad + 1)
   }
 
+  let total = good + neutral + bad
+
   return (
     <div>
       <Header phrase='give feedback' />
@@ -47,9 +49,12 @@ const App = () => {
       <Button handleClick={handleClickNeutral} word='neutral' />
       <Button handleClick={handleClickBad} word='bad' />
       <Header phrase='statistics' />
-      <Word type='good' num={good} />
-      <Word type='neutral' num={neutral} />
-      <Word type='bad' num={bad} />
+      <Statistics type='good' num={good} />
+      <Statistics type='neutral' num={neutral} />
+      <Statistics type='bad' num={bad} />
+      <Statistics type='all' num={total} />
+      <Statistics type='average' num={(good - bad) / (total)} />
+      <Statistics type='positive' num={good / total} />
     </div>
   )
 }
