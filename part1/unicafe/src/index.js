@@ -13,8 +13,6 @@ const Statistics = ({ type, num }) => {
   )
 }
 
-
-
 const Button = ({ handleClick, word }) => {
   return (
     <button onClick={handleClick}>{word}</button>
