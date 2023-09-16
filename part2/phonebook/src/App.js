@@ -2,10 +2,14 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', telephone: 634543639 }
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ])
   const [newName, setNewName] = useState('')
   const [newTelephone, setNewTelephone] = useState('')
+  const [nameFilter, setNameFilter] = useState('')
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -23,6 +27,10 @@ const App = () => {
 
   }
 
+  const changeFilter = (event) => {
+    setNameFilter(event.target.value)
+  }
+
   const changeNewName = (event) => {
     setNewName(event.target.value)
   }
@@ -33,6 +41,11 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <h3>filter by name</h3>
+      <div>
+        filter shown with: <input value={nameFilter} onChange={changeFilter} />
+      </div>
+      <h3>add a new contact</h3>
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={changeNewName} />
@@ -46,10 +59,19 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map((person, index) => (
-          <li key={index}> {person.name} {person.telephone}</li>
-        ))}
+        {persons.map((person, index) => {
+          const nameInLowerCase = person.name.toLowerCase();
+          const nameFilterInLowerCase = nameFilter.toLowerCase();
+
+          if (nameFilter === '' || nameInLowerCase.includes(nameFilterInLowerCase)) {
+            return <li key={index}> {person.name} {person.telephone}</li>;
+          }
+
+          return null;
+        })}
       </ul>
+
+
     </div>
   )
 }
